@@ -34,20 +34,20 @@ defaults
         errorfile 200 /etc/haproxy/errors/200.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend afsa-frontend
+frontend diana-frontend
         bind *:80
         mode http
         http-request redirect scheme https code 301 unless { ssl_fc }
         http-request set-header X_Forwarded-Proto http
-        default_backend afsa-backend
+        default_backend diana-backend
 
-frontend afsa-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/www.afsa.tech.pem
+frontend diana-frontend-https
+        bind *:443 ssl crt etc/letsencrypt/live/www.dianaruzindana.tech/fullchain.pem
         http-request set-header X-Forwarded-Proto https
-        default_backend afsa-backend
+        default_backend diana-backend
 
 backend afsa-backend
         balance roundrobin
-        server 5977-web-01 204.236.214.154:80 check
-        server 5977-web-02 52.23.235.112:80 check
+        server 5977-web-01 18.212.203.85:80 check
+        server 5977-web-02 3.84.225.215:80 check
 
